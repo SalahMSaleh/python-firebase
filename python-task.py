@@ -1,5 +1,4 @@
 from firebase import firebase
-import struct
 import time
 from time import sleep
 
