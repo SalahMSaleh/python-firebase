@@ -57,9 +57,11 @@ def check_TODO_Mirror():
             lastTODO_Mirror_data=TODO_Mirror_data
             lastTODO_Task_data=TODO_Mirror_data
             print('something deleted')
-            
+
+#A while loop to keep the program running            
 while(1):
 
+#Calling the checking funtions with delay to make sure everything patched to the firebase correctly
     check_TODO_Task()
     time.sleep(1)
     check_TODO_Mirror()    
