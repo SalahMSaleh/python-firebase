@@ -3,20 +3,26 @@ import time
 from time import sleep
 
 
-print('intialiaizing firebase object')    
+#intialiaizing firebase object.    
 firebase = firebase.FirebaseApplication('https://python-task-c5867.firebaseio.com/', None)
 
 
+#Last variables are to get the data in the objects for first time so it dosent trigger changes in the first time.
 lastTODO_Task_data=firebase.get('/TODO_Task',None)
 lastTODO_Mirror_data=firebase.get('/TODO_Mirror',None)
- 
+
+
+#A function to check TODO_Task. 
 def check_TODO_Task():
-    
+
     global lastTODO_Task_data
     global lastTODO_Mirror_data
     TODO_Task_data= firebase.get('/TODO_Task',None)
 
+#Check for any changes from the last.
     if(lastTODO_Task_data!=TODO_Task_data):
+
+#Check what changes happend by comparing the length of data for deletion length must decrease.
         if(len(str(TODO_Task_data))>=len(str(lastTODO_Task_data))):
             TODO_Mirror_patch= firebase.patch('/TODO_Mirror',TODO_Task_data)
             lastTODO_Task_data=TODO_Task_data
@@ -27,15 +33,19 @@ def check_TODO_Task():
             TODO_Mirror_patch= firebase.patch('/TODO_Mirror',TODO_Task_data)
             lastTODO_Task_data=TODO_Task_data
             lastTODO_Mirror_data=TODO_Task_data
-            print('something changed in TODO_Task and something deleted')
-            
+            print('something deleted')
+
+#A function to check TODO_Mirror.            
 def check_TODO_Mirror():
 
     global lastTODO_Task_data
     global lastTODO_Mirror_data
     TODO_Mirror_data= firebase.get('/TODO_Mirror',None)
 
+#Check for any changes from the last.
     if(lastTODO_Mirror_data!=TODO_Mirror_data):
+
+#Check what changes happend by comparing the length of data for deletion length must decrease.
         if(len(str(TODO_Mirror_data))>=len(str(lastTODO_Mirror_data))):
             TODO_Task_patch= firebase.patch('/TODO_Task',TODO_Mirror_data)
             lastTODO_Mirror_data=TODO_Mirror_data
@@ -46,7 +56,7 @@ def check_TODO_Mirror():
             TODO_Task_patch= firebase.patch('/TODO_Task',TODO_Mirror_data)
             lastTODO_Mirror_data=TODO_Mirror_data
             lastTODO_Task_data=TODO_Mirror_data
-            print('something changed in TODO_Mirro and something deleted')
+            print('something deleted')
             
 while(1):
 
